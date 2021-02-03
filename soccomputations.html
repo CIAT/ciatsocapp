@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>CIAT Soil Sequestration App (CSSA) - Computations</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:300">
+		
+		<!-- Highcharts -->
+		<script src="https://github.highcharts.com/master/highcharts.src.js"></script>
+		<script src="https://github.highcharts.com/master/highcharts-more.js"></script>
+		<script src="https://github.highcharts.com/master/modules/exporting.src.js"></script>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		
+		<!-- Editable cell -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+		
+		<!-- Range Slider -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.0.5/rangeslider.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.0.5/rangeslider.min.js"></script>
+		
+		<!-- Local Styleshet-->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		
+		<!-- SOCAPP js -->
+		<script src="js/socapp.js"></script>
+		
+		<!-- dataTable CSS-->
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css">
+		
+		<!-- dataTable JS -->
+		<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+		
+		<!-- Local Styleshet-->
+		<link rel="stylesheet" type="text/css" href="js/Messi-master/messi.min.css">
+		
+		<!-- SOCAPP js -->
+		<script src="js/Messi-master/messi.min.js"></script>
+		
+		
+		<script>
+			var _socapp = new SocApp();
+			
+			function addtablerowclick() {
+				_socapp.addtablerowclick();
+			}
+			
+			
+			function displayactivityvalues() {
+				_socapp.displayactivityvalues();
+			}
+			
+			
+			function checkgraphovershootchange() {
+				_socapp.checkgraphovershootchange();
+			}
+			
+			
+			function checkgraphnegativeschange() {
+				_socapp.checkgraphnegativeschange();
+			}
+			
+			
+			function repositionfooter() {
+				try {
+					if (($('body').outerHeight() + $('footer').outerHeight()) < $(window).outerHeight()) {
+						$('footer').css({"bottom": 0, "position": "absolute" });
+					
+					} else {
+						$('footer').css({"top": $('body').outerHeight(), "position": "absolute" });
+					}
+				}
+				
+				catch (err) {
+					messiprompt("An error has occured: " + err.message, "Error", "messierror");
+				}
+			}
+			
+			$(window).load(function() {
+				repositionfooter();
+			});
+			
+			$(window).onresize(function() {
+				repositionfooter();
+			});
+			
+		</script>
+	</head>
+	
+	<body class="offsetfootermargin">
+		<div class="container" style="width:100%; padding: 0px">
+			<nav class="navbar navbar-default" style="width:100%;">
+				<div class="container-fluid" style="width:100%;">
+					<div class="navbar-header" style="width:100%;">
+						<button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					
+					<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height:1px; width:100%;">
+						<ul class="nav navbar-nav navbar">
+							<h1 class="soc-logo">
+								<a href="index.html">
+									<span class="brand-ciat">CIAT</span>
+									<span class="brand-app">SOC</span>
+									<span class="brand-app">APP</span>
+								</a>
+							</h1>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a role="button" href="index.html">
+									About
+								</a>
+							</li>
+							<li>
+								<a role="button" href="soccomputations.html">
+									Computations
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+			
+		<div class="container-fluid" style="padding: 0 10px 10px 10px; background-color: #eeeaea;">
+			<div>
+				<p><h5 id="hselectoptions" class="italicfont" style="display:inline"></h5><a target="_blank" id="hfaostatlink" class="italicfont" style="display:inline" href="">FAOSTAT (2015) for the year 2013.</a></p>
+			</div>
+		
+			<div class="form-inline" style="padding-left :10px; padding-right :10px;">
+				<div class="form-group">
+					<input type="text" class="form-control input-sm" id="txtaddrow" placeholder="No of Layers" style="width:90px">
+				</div>
+				<div class="form-group">
+					<button id="btnaddrow" onclick="addtablerowclick()" class="btn btn-primary btn-sm ladda-button" data-style="expand-left" data-toggle="tooltip" data-placement="right" title="Add Layers"><span class="ladda-label">Add layers</span></button>
+				</div>
+				<div class="form-group">
+					<label for="cmblocality">Locality</label>
+					<select id="cmblocality" class="form-control" style="width:180px"></select>
+				</div>
+				<div class="form-group" id="divlocality">
+					<input type="text" class="form-control input-sm" id="txtlocality" placeholder="Input Locality" style="width:170px">
+				</div>
+				<div class="form-group">
+					<label for="cmblanduse">Land Use</label>
+					<select id="cmblanduse" class="form-control" style="width:180px"></select>
+				</div>
+				<div class="form-group" id="divlanduse">
+					<input type="text" class="form-control input-sm" id="txtlanduse" placeholder="Input Landuse" style="width:170px">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control input-sm" id="txtacreage" placeholder="Input Acreage (ha)" style="width:120px">
+				</div>
+				<div class="checkbox"><label><input type="checkbox" id="checkcomps" value=""></label></div>
+				<button id="btncomputeactivity" onclick="displayactivityvalues()" class="btn btn-success btn-sm ladda-button" data-style="expand-left" data-toggle="tooltip" data-placement="right" title="Compute"><span class="ladda-label">Compute</span></button>
+			</div>
+		</div>
+		
+		<div id="divmain" class="container-fluid">
+			<div id="divinnermain" class="container-fluid">
+				<div class="content-wrapper">
+					<div id="divactivity1table" class="table-responsive" style="width:100%; display: none;">
+						<p><h5 id="hupdatemaintable" class="italicfont"></h5></p>
+						<table id="tblactivity1" class="table table-striped table-bordered table-condensed">
+							<thead>
+								<th>Layer</th><th>Layer Thickness (cm)</th><th>SOC conc. (g/kg) - START</th><th>SOC conc. (g/kg) - END</th><th>Bulk density (g/cm3)</th><th>SOC-Seq (t/ha/depth)</th><th>Remove</th>
+							</thead>
+								
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+				<div style="clear:both; height:10px;"></div>
+				
+				<div id="outerdiv" class="div-outer">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+								  <a id="asocconcheading" data-toggle="collapse" href="#panel-activity1"></a>
+								</h5>
+							</div>
+							
+							<div id="panel-activity1" class="panel-collapse collapse in" style="padding:10px">
+								<div id="divactivity1computedtable" class="div-compute-table"></div>
+								<div class="divspacer" style="clear:both; height:10px;"></div>
+								
+								<div id="divactivity1graphtable" class="div-compute-table"></div>
+								<div class="divspacer" style="clear:both; height:10px;"></div>
+								
+								<div id="ct-chartactivity1" class="div-compute-chart" style="width:100% !important; height:100% !important;"></div>
+							</div>
+						</div>
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+								  <a id="asocseqheading" data-toggle="collapse" href="#panel-activity2"></a>
+								</h5>
+							</div>
+							
+							<div id="panel-activity2" class="panel-collapse collapse in" style="padding:10px">
+								<div id="divactivity2computedtable" class="div-compute-table"></div>
+								
+								<div class="checkbox" style="float:right; overflow:auto;"><label class="checkbox-inline"><input type="checkbox" id="checkgraphovershoot" onchange="checkgraphovershootchange()" value="Prevent Overshooting"></label>Prevent Overshooting<br><label class="checkbox-inline"><input type="checkbox" id="checkgraphnegatives" onchange="checkgraphnegativeschange()" value="Prevent Negatives"></label>Prevent Negatives<br></div>
+								
+								<div id="divactivity2graphtable" class="div-compute-table"></div>
+								<div class="divspacer" style="clear:both; height:10px;"></div>
+								
+								<div id="ct-chartactivity2" class="div-compute-chart" style="width:100% !important; height:100% !important;"></div>
+							</div>
+						</div>
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+								  <a id="asocseqovertimeheading" data-toggle="collapse" href="#panel-activity3"></a>
+								</h5>
+							</div>
+							
+							<div id="panel-activity3" class="panel-collapse collapse in" style="padding:10px;">
+								<div id="divactivity3graphtable" class="div-compute-table"></div>
+								<div class="divspacer" style="clear:both; height:10px;"></div>
+								
+								<div class="row">
+									<div id="divactivity3computedtable" class="col-lg-1 col-md-1 col-sm-1" style="width:40%;"></div>
+									<div id="ct-chartactivity3" class="col-lg-2 col-md-2 col-sm-2" style="width:60%;"></div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+								  <a id="asoctotalseqsummaryheading" data-toggle="collapse" href="#panel-finaltable"></a>
+								</h5>
+							</div>
+							<div style="padding: 5px 10px 0px 5px; width:100%; text-align:right;">
+								<input type="image" id="btnprinttotalseq" src="./img/print.png" title="Print" height="40" data-toggle="tooltip" data-placement="right"/>
+							</div>
+							<div style="clear:both; height:5px;"></div>
+							
+							<div id="panel-finaltable" class="panel-body panel-collapse collapse in" style="padding:10px">
+								<div id="divtotalsocsequestration" style="width: 100%; overflow: auto; display: none; font-size: 12px;" class="dataTables_wrapper form-inline dt-bootstrap">
+									<table id="tbltotalsocsequestration" class="table table-striped table-bordered table-condensed table-hover">
+										<thead>
+											<th>Locality</th><th>Land Use</th><th>Years of seq.</th><th>SOC-sequestration (Mt C)</th>
+										</thead>
+											
+										<tbody>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+	<footer class="bs-docs-footer" role="contentinfo">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="org-logo-details">
+						<p class="ciat-full text-muted">International Center for Tropical Agriculture</p>
+						<p class="ciat-full text-muted">Member of the CGIAR Consortium </p>
+						<p class="copyright-notice text-muted">© 2015. All Rights Resverved.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="org-logo">
+						<div class="cgiar-logo pull-left">
+							<a href="http://www.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logocgiar.png" alt="CIAT"></a>
+						</div>
+						<div class="ciat-logo pull-left">
+							<a href="http://ciat.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logociat.png" alt="CIAT"></a>
+						</div>
+						<div class="wle-logo pull-left">
+							<a href="https://wle.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logowle.png" alt="WLE logo"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer> 
+</html>

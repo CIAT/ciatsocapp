@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>CIAT Soil Sequestration App (CSSA) - About</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:300">
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<!-- Local Styleshet-->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+
+		<!-- Local Styleshet-->
+		<link rel="stylesheet" type="text/css" href="js/Messi-master/messi.min.css">
+
+		<!-- SOCAPP js -->
+		<script src="js/Messi-master/messi.min.js"></script>
+
+
+		<script>
+			var filepath = "stringconstants.json";
+			var serialized_constantsdict = {};
+			var socappdetailskey;
+            var socappcgiardetailskey1, socappcgiardetailskey2;
+			var socappfundingkey1;
+			var socappfundingkey2;
+			var socappfundingkey3;
+			var socappteamkey;
+			var copyrightkey;
+
+			$(document).ready(function() {
+				if (!window.jQuery) {
+					messiprompt("Your internet connection is not reliable. Computations not possible.", "Internet Connection", "messierror");
+					return;
+				}
+
+				// fetch json data
+				$.getJSON(filepath, {
+					format: "json"
+				})
+				.done(function(data) {
+					serialized_constantsdict = data;
+
+					socappdetailskey = serialized_constantsdict["introductionkey"];
+                    socappcgiardetailskey1 = serialized_constantsdict["introductioncgiarkey1"];
+                    socappcgiardetailskey2 = serialized_constantsdict["introductioncgiarkey2"];
+					socappfundingkey1 = serialized_constantsdict["socappfundingkey1"];
+					socappfundingkey2 = serialized_constantsdict["socappfundingkey2"];
+					socappfundingkey3 = serialized_constantsdict["socappfundingkey3"];
+					socappteamkey = serialized_constantsdict["socappteamkey"];
+					copyrightkey = serialized_constantsdict["copyrightkey"];
+
+					$('#psocappdetails').text(socappdetailskey);
+                    $('#psocappcgiardetails1').text(socappcgiardetailskey1);
+                    $('#psocappcgiardetails2').text(socappcgiardetailskey2);
+					$('#psocappfunding1').text(socappfundingkey1);
+					$('#psocappfunding2').text(socappfundingkey2);
+					$('#psocappfunding3').text(socappfundingkey3);
+					$('#psocappteam').text(socappteamkey);
+					$('#hcopyright').text(copyrightkey);
+
+				})
+				.fail(function(jqxhr, textStatus, error) {
+					messiprompt(textStatus + ", " + error, "Request Failed", "messierror");
+					return;
+				});
+
+
+			});
+
+			$(window).load(function() {
+				repositionfooter();
+			});
+
+			$(window).onresize(function() {
+				repositionfooter();
+			});
+
+
+			function repositionfooter() {
+				try {
+					if (($('body').outerHeight() + $('footer').outerHeight()) < $(window).outerHeight()) {
+						$('footer').css({"bottom": 0 });
+
+					} else {
+						$('footer').css({"top": $('body').outerHeight() });
+					}
+				}
+
+				catch (err) {
+					messiprompt("An error has occured: " + err.message, "Error", "messierror");
+				}
+			}
+
+
+			function messiprompt(msg, title, titleanimation) {
+				var titleclass;
+
+				if (titleanimation == "messisuccess") {
+					titleclass = 'success';
+
+				} else if (titleanimation == "messiinfo") {
+					titleclass = 'info';
+
+				} else if (titleanimation == "messiwarning") {
+					titleclass = 'anim warning';
+
+				} else if (titleanimation == "messierror") {
+					titleclass = 'anim error';
+				}
+
+				new Messi(msg, { title: title, titleClass: titleclass, modal: true });
+			}
+		</script>
+	</head>
+
+	<body class="offsetfootermargin">
+		<div class="container" style="width:100%; padding: 0px">
+			<nav class="navbar navbar-default" style="width:100%;">
+				<div class="container-fluid" style="width:100%;">
+					<div class="navbar-header" style="width:100%;">
+						<button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+
+					<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height:1px; width:100%;">
+						<ul class="nav navbar-nav navbar">
+							<h1 class="soc-logo">
+								<a href="index.html">
+									<span class="brand-ciat">CIAT</span>
+									<span class="brand-app">SOC</span>
+									<span class="brand-app">APP</span>
+								</a>
+							</h1>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a role="button" href="index.html">
+									About
+								</a>
+							</li>
+							<li>
+								<a role="button" href="soccomputations.html">
+									Computations
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<div id="divmain" class="container-fluid">
+			<div id="divinnermain" class="container-fluid">
+				<div class="socapp-content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 id="hsocapp">About the CIAT SOC APP</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 sub-page-content">
+								<p id="psocappdetails"></p>
+                                <p id="psocappcgiardetails1" style="display:inline";></p>
+                                <a target="_blank" id="psocappcgiardetails2" class="italicfont" style="display:inline;font-size:18px;" href="https://wle.cgiar.org/"></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 sub-page-content btn-form-calc">
+								<button id="btnperformcalculations" onclick="window.location.href='soccomputations.html'" class="btn btn-success btn-sm ladda-button" data-style="expand-left" data-toggle="tooltip" data-placement="top" title="Perform Calculations"><span class="ladda-label">Perform Calculations</span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="socapp-funding">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 id="hfunding">Funding Support</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 sub-page-content">
+								<p id="psocappfunding1" style="display:inline;"></p>
+								<a target="_blank" id="psocappfunding2" class="italicfont" style="display:inline;font-size:18px;" href="https://www.giz.de/en/html/index.html"></a>
+								<p id="psocappfunding3" style="display:inline"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="team-content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<h3 id="hteam">The Team</h3>
+							</div>
+							<div class="col-md-12 sub-page-content">
+								<p id="psocappteam"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="copyright-content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>Copyright</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 sub-page-content">
+								<p id="hcopyright"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<footer class="bs-docs-footer" role="contentinfo">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="org-logo-details">
+						<p class="ciat-full text-muted">International Center for Tropical Agriculture</p>
+						<p class="ciat-full text-muted">Member of the CGIAR Consortium </p>
+						<p class="copyright-notice text-muted">© 2015. All Rights Resverved.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="org-logo">
+						<div class="cgiar-logo pull-left">
+							<a href="http://www.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logocgiar.png" alt="CGIAR logo"></a>
+						</div>
+						<div class="ciat-logo pull-left">
+							<a href="http://ciat.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logociat.png" alt="CIAT logo"></a>
+						</div>
+                        <div class="wle-logo pull-left">
+                            <a href="https://wle.cgiar.org/" target="_blank"><img class="img-responsive" src="./img/logowle.png" alt="WLE logo"></a>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</html>
